@@ -55,10 +55,19 @@ function addMessage(postTitle, postBody) {
     title: postTitle,
     body: postBody
   }
-  var database = firebase.database().ref("posts");
+
+  // Get a reference to the database service
+  var database = firebase.database().ref('posts');
 
   var newPostRef = database.push();
-  newPostRef.set(postData);
+  newPostRef.set(postData, function(error) {
+    if (error) {
+      // The write failed...
+    } else {
+      window.location.reload();
+    }
+  });
+
 }
 
 function handMessageFormSubmit() {
